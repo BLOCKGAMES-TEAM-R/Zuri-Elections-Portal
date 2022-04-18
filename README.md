@@ -1,15 +1,15 @@
-# Basic Sample Hardhat Project
+# Nest Elections Project (Team R)
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+## Problem Statement: 
+ZURI as an organisation needs to setup an election for leadership position in its school. The major stakeholders here are the school board of directors, the teachers and the students. Create a smart contract that enables the following:
+    >> Each stakeholders should be able to vote.
+    >> Setup Access control for all stakeholders
+    >> Only the chairman and teachers can setup and compile the result of the votes
+    >> Only the chairman can grant access for the vote to happen.(There should be enable and disable vote.). If vote is disabled, no voting should take place.
+    >> Students should not see result of votes until made public by the other stakeholders
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+## Team Members:
+    >> Clinton Chukwunenye F.
+    >> Gbolahan Adebayo
+    >> Majid Kareem
+    >> Oluwafemi Banji
