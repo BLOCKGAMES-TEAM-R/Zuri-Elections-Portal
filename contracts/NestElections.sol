@@ -5,6 +5,23 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract NestElections {
 
+    address public votersID;
+    bool public voteEnabled;
+    bool public isEligible = false;
+    address private chairman;
+    
+    struct BOD {
+        address _votersID;
+    }
+
+
+    struct Teachers {
+        address _votersID;
+    }
+
+    struct students {
+        address _votersID;
+    }
     constructor() {
 
     }
