@@ -84,17 +84,17 @@ contract Election is Pausable, AccessControl {
 
     //modifiers
     modifier onlyAdmin() {
-        require(isAdmin(msg.sender), "Restricted to only admin.");
+        require(isAdmin(msg.sender), "You are Not an Admin.");
         _;
     }
 
     modifier onlyCandidateManager() {
-        require(isCandidateManager(msg.sender), "Restricted to only Candidate Managers.");
+        require(isCandidateManager(msg.sender), "You are Not a Manager.");
         _;
     }
 
     modifier onlyBatchAuthorizer() {
-        require(isBatchAuthorizer(msg.sender), "Restricted to only Batch Authorizers.");
+        require(isBatchAuthorizer(msg.sender), "Not authorized.");
         _;
     }
 
@@ -115,15 +115,19 @@ contract Election is Pausable, AccessControl {
     }
 
 
-    // @notice Ensure that only a moderator can call a specific function.
-    // @dev Modifier to check that address is an assigned moderator.
-//    modifier isMod(address _teacher) {
-  //      bool ismod = moderator[_teacher];
-    //    require(ismod, "Only Moderators Have Access!");
-      //  _;
+    /* @notice Ensure that only a moderator can call a specific function.
+    * @dev Modifier to check that address is an assigned moderator.
+      modifier isMod(address _teacher) {
+    * bool ismod = moderator[_teacher];
+    * require(ismod, "Only Moderators Have Access!");
+      _;
     //}
+    */
 
 
+    /*
+        @dev Function Adds thecandidates for the election
+    */
     function addCandidate(string memory name) public onlyRole (CANDIDATE_MANAGER_ROLE) {
         candidates[candidateCount] = Candidate(candidateCount, name, 0);
         candidateCount++; 
@@ -159,12 +163,12 @@ contract Election is Pausable, AccessControl {
     }
 
    ///@dev function to pause the contract
-    function pause() public isAdmin(msg.sender) {
+    function pauseVotes() public isAdmin(msg.sender) {
         _pause();
     }
 
     ///@dev function to unpause the contract
-    function unpause() public isAdmin(msg.sender) {
+    function unpauseVotes() public isAdmin(msg.sender) {
         _unpause();
     }
 
