@@ -82,7 +82,7 @@ contract Election is Pausable, AccessControl {
 
     event ElectionResult(string name, uint voteCount);
 
-
+    //modifiers
     modifier onlyAdmin() {
         require(isAdmin(msg.sender), "You are Not an Admin.");
         _;
@@ -150,7 +150,7 @@ contract Election is Pausable, AccessControl {
 
     function batchAuthorizeVoters(address[] calldata voter) public onlyRole (BATCH_AUTHORIZER_ROLE) {
         //grants access to only a batch authorizer
-        require(isBatchAuthorizer(msg.sender), "Only batch can give right to vote.");
+        require(isBatchAuthorizer(msg.sender), "Only batch authorizer can give right to vote.");
         //voters should not exceed 200 addresses
         require(voters.length <= 200, "Number of addresses exceeds maximum allowable");
         //access can't be granted to someone who has already voted
