@@ -82,7 +82,7 @@ contract Election is Pausable, AccessControl {
 
     event ElectionResult(string name, uint voteCount);
 
-
+    //modifiers
     modifier onlyAdmin() {
         require(isAdmin(msg.sender), "Restricted to only admin.");
         _;
