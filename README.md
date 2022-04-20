@@ -12,7 +12,7 @@
 
 > Students should not see result of votes until made public by the other stakeholders
 
-## Team Members:
+# Team Members:
     >> Clinton Chukwunenye F.
     >> Gbolahan Adebayo
     >> Majid Kareem
