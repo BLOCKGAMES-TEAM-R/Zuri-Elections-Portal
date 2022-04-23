@@ -49,7 +49,7 @@ library SignatureSuite {
     }
 }
 
-contract NestElections {
+contract ZuriVote {
     string public name;
     string public description;
     address public votersID;
@@ -141,12 +141,12 @@ contract NestElections {
     uint256[] public winnerIDs;
 
     constructor(string[] memory _nda, string[] memory _candidates) {
-        electionTimeline = block.timestamp + 12 hours;
+        electionTimeline = block.timestamp + 8 minutes;
         _addAdmin(chairman = msg.sender);
         _setUpElection(_nda, _candidates);
     }
 
-    //tiime left for voting to end
+    //time left for voting to end
     function timeLeft() public view returns (uint256) {
         if (block.timestamp >= electionTimeline) {
             return 0;
@@ -215,12 +215,6 @@ contract NestElections {
         _vote(_candidateID, _voter);
     }
 
-    //function addAdmin allows chairman distribute admin permission
-    //function startElection only callable by admin. Used to start election
-    //function end election only callable by admins used to end election
-    //vote Public function that allows the public to cast votes for candidate
-    //function voteWithSig that allows theier-party to
-    //Calculate election winner
     function _calculateWinner() internal onlyAdmin {
         for (uint256 i = 0; i < candidatesCount; i++) {
             if (candidates[i].voteCount > winnerVoteCount) {

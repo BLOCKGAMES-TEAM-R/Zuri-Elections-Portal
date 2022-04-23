@@ -1,4 +1,8 @@
 require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-web3");
+require("@nomiclabs/hardhat-truffle4");
+
+
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -17,10 +21,16 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
+  hardhat: {
+    chainId: 1337
+  },
+  localhost: {
+    url: "http://127.0.0.1:8545"
+  },
   solidity: {
     compilers: [
       {
-        "version": "0.8.5"
+        "version": "0.8.9"
       },
       {
         "version": "0.9.0",
