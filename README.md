@@ -1,6 +1,8 @@
-Contract Address: https://rinkeby.etherscan.io/tx/0x77ca31e02897fa8fc5d97c597fb6eba60e5ae433b391f98af2da82bf21ae8b97
+Contract Address: https://rinkeby.etherscan.io/address/0x72bf3ad82718c182f2afb2e2ac96d2c85d3cc3b4
 
 Team repo: https://github.com/BLOCKGAMES-TEAM-R/Zuri-Elections-Portal
+
+## A force Push was instantiated which cleared the working commits history on main branch. Kindly check the Branches for individual commit history. Clinton's can be found in his contribution repo link
 
 # Nest Elections Project (Team R)
 
