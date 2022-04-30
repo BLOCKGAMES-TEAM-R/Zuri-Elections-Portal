@@ -50,9 +50,8 @@ library SignatureSuite {
 }
 
 contract ZuriVote {
-    string public name;
     string public description;
-    address public votersID;
+   // address public votersID;
     bool public isActive = false;
     bool public isEnded = false;
     // bool public voteEnabled;
@@ -108,6 +107,18 @@ contract ZuriVote {
         _;
     }
 
+    modifier onlyCandidateManager() {
+        bool IsCandidateManager = false;
+        for (uint256 i; i < candidateManagerCount; i++) {
+            if (msg.sender == candidateManagers[i]) {
+                IsCandidateManager = true;
+                break;
+            }
+        }
+        require(IsCandidateManager, "You are not a Candidate Manager");
+        _;
+    }
+
     //modifier grants permission to only valid candidate
     modifier onlyValidCandidate(uint256 _candidateID) {
         require(
@@ -130,6 +141,8 @@ contract ZuriVote {
 
     //admin addresses
     mapping(uint256 => address) public admins;
+
+    mapping(uint256 => address) public candidateManagers;
     //store address that have voted
     mapping(address => bool) public voters;
     //Store candiates in a map
@@ -138,7 +151,7 @@ contract ZuriVote {
     uint256 public candidatesCount = 0;
     //number of admin available
     uint256 public adminCount = 0;
-
+    uint256 public candidateManagerCount = 0;
     //Stores final election results
     uint256 public winnerVoteCount;
 
@@ -148,6 +161,7 @@ contract ZuriVote {
     constructor() {
         electionTimeline = block.timestamp + 20 minutes;
         _addAdmin(chairman = msg.sender);
+        //_addCandidateManger(chairman = msg.sender);
         //_setUpElection(_nda, _candidates);
     }
 
@@ -161,9 +175,15 @@ contract ZuriVote {
     }
 
     //add an admin
-    function _addAdmin(address _newAdmin) internal {
+    function _addAdmin(address _newAdmin) public {
         admins[adminCount] = _newAdmin;
         adminCount++;
+    }
+
+    //add a candidateManager
+    function addCandidateManager(address _newCM) public onlyAdmin {
+        candidateManagers[candidateManagerCount] = _newCM;
+        candidateManagerCount++;
     }
 
     //commence election & begin accepting vote
@@ -185,7 +205,7 @@ contract ZuriVote {
     }
 
     //Fucntion to add candidate
-    function _addCandidate(string memory _name) internal {
+    function _addCandidate(string memory _name) public onlyCandidateManager {
         candidates[candidatesCount] = Candidate({
             candidateID: candidatesCount,
             candidateName: _name,
@@ -220,7 +240,7 @@ contract ZuriVote {
         _vote(_candidateID, _voter);
     }
 
-    function _calculateWinner() internal onlyAdmin {
+    function _calculateWinner() public onlyAdmin {
         for (uint256 i = 0; i < candidatesCount; i++) {
             if (candidates[i].voteCount > winnerVoteCount) {
                 winnerVoteCount = candidates[i].voteCount;
@@ -233,25 +253,25 @@ contract ZuriVote {
         (winnerVoteCount, winnerIDs);
     }
 
-    //setup variables and date to create electon contract
-    function _setUpElection(string[] memory _nda, string[] memory _candidates)
-        internal
-    {
-        require(_candidates.length > 0, "You need at least 1 candidate.");
-        name = _nda[0];
-        description = _nda[1];
-        for (uint256 i = 0; i < _candidates.length; i++) {
-            _addCandidate(_candidates[i]);
-        }
-    }
+    /* setup variables and date to create electon contract
+  //  function _setUpElection(string[] memory _nda, string[] memory _candidates)
+    //    public
+    //{
+      //  require(_candidates.length > 0, "You need at least 1 candidate.");
+       // name = _nda[0];
+       // description = _nda[1];
+        //for (uint256 i = 0; i < _candidates.length; i++) {
+       //     _addCandidate(_candidates[i]);
+        //}
+    //}*/
 
     function _vote(uint256 _candidateID, address _voter)
-        internal
+        public
         onlyValidCandidate(_candidateID)
     {
         require(!voters[_voter], "You have voted already");
         voters[_voter] = true;
         candidates[_candidateID].voteCount++;
         emit VotedFor(_candidateID, candidates[_candidateID].voteCount);
-    }
+    } 
 }
